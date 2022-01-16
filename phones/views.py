@@ -8,9 +8,7 @@ from phones.scraperthread import gotoscrap
 
 
 def index(request):
-    # On démarre le web scrapping en tâche de fond
-    gotoscrap
-
+    gotoscrap()
     listedestelephone = Phones.objects.all().order_by('-id').values()[:30]
     context = {
         'listedestelephone': listedestelephone,
@@ -31,11 +29,11 @@ def export(request):
 
 
 def webscrap(request):
-    gotoscrap
     listedestelephone = Phones.objects.values()[:30]
     context = {
         'alertescrap': 'Une nouvelle extraction du contenu des sites Web est lancée avec succès!',
         'listedestelephone' : listedestelephone
     }
     response = render(request, 'phones/index.html', context)
+    gotoscrap()
     return response

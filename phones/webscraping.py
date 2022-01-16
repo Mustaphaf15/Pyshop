@@ -1,9 +1,12 @@
-import datetime
+import threading
+import time
 
 import requests
 from bs4 import BeautifulSoup
+
 from phones.models import Phones
 from django.templatetags.static import static
+
 
 class Scrappers:
     def __init__(self,
@@ -26,6 +29,13 @@ class Scrappers:
         self.selector_date_pub = selector_date_pub
         self.selector_lien = selector_lien
 
+    def runscrap(self):
+        runningthreads = [x.name for x in threading.enumerate()]
+        if not self.nomsite in runningthreads:
+            t = threading.Thread(target=self.scrap(), name=self.nomsite)
+            t.start()
+
+
     def scrap(self):
         page = requests.get(self.lien)
         soup = BeautifulSoup(page.content, 'lxml')
@@ -42,15 +52,21 @@ class Scrappers:
                     if 'https://' in item.select_one(self.selector_img)['data-original']:
                         phone.image = item.select_one(self.selector_img)['data-original']
                     else:
-                        phone.image = static('/img/phone.png')
+                        phone.image = "/".join(self.lien.split("/")[0:3])
+                        phone.image += item.select_one(self.selector_img)['data-original']
+
                 else:
-                    phone.image = "/".join(self.lien.split("/")[0:3])
+                    phone.image = static('/img/phone.png')
                 if not item.select_one(self.selector_lien) is None:
                     if 'https://' in item.select_one(self.selector_lien)['href']:
                         phone.lien_pub = item.select_one(self.selector_lien)['href']
                     else:
                         phone.lien_pub = "/".join(self.lien.split("/")[0:3])
                         phone.lien_pub += item.select_one(self.selector_lien)['href']
-
                 phone.date_pub = item.select_one(self.selector_date_pub).get_text(strip=True)
-                phone.save()
+
+                if not Phones.objects.filter(titre=phone.titre).exists():
+                    phone.save()
+
+        #mise ne pause du webscrapping pendant 5 minutes
+        time.sleep(300)
