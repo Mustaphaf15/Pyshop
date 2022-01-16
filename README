@@ -1,0 +1,23 @@
+Projet de fin de module : Python
+Objectifs de l’application :
+-Analyser le marche de vente des smartphones
+-Savoir la region qui propose des prix minimums et les prix maximums
+-Comparer les prix et la disponibilite des produits dans chaque ville
+-Filtrer les produits selon les criteres de l’utilisateur
+Consignes
+-Les sources de donnees : les sites d’annonces les plus connus comme 'avito', 'marocannonces'
+-Un scraper qui recupere les donnees d’une maniere structuree et les mettre dans une base de donnees de votre choix chaque 5 minutes sans doublons (utiliser un ORM)
+-Une interface qui affiche un tableau de produits avec titre d’annonce, prix, ville et date du produit qui se rafraîchit dynamiquement chaque 5 minutes.
+-Dans l’interface graphique, un bouton qui permet d’exporter les donnees dans un fichiers CSV
+-Un scraping explicite est fait manuellement sans attendre les 5 minutes en cliquant sur le bouton 'Recuperer les annonces' en haut de la fenêtre.
+-L’extraction se fait sans bloquer l’utilisation de l’interface graphique (utiliser les threads)
+-Une deuxieme interface graphique qui contient la moyenne des prix de chaque type de smartphone dans chaque ville (utiliser un tableau croise dynamique).
+-Creer une interface qui permet de choisir l’intervalle de prix, la ville et l’intervalle de date. Ensuite, envoi par email les produits qui repondent aux criteres cites sur l’interface.
+-La programmation orientee objet est obligatoire.
+-Developper le projet en plusieurs packages
+-La conception et la disposition des interfaces graphiques est laissee à votre choix
+Criteres de l’evaluation :
+-Proprete du code
+-Ergonomie des interfaces
+-Efficacite du programme
+-Respect des consignes ci-dessus
