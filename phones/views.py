@@ -11,7 +11,7 @@ def index(request):
     # On démarre le web scrapping en tâche de fond
     gotoscrap
 
-    listedestelephone = Phones.objects.values()[:30]
+    listedestelephone = Phones.objects.all().order_by('-id').values()[:30]
     context = {
         'listedestelephone': listedestelephone,
     }
@@ -29,10 +29,13 @@ def export(request):
     response['Content_Disposition'] = 'attachment; filename= "phone.csv"'
     return response
 
+
 def webscrap(request):
     gotoscrap
+    listedestelephone = Phones.objects.values()[:30]
     context = {
-        'alertescrap': 'webscrapping lancer avec succès!',
+        'alertescrap': 'Une nouvelle extraction du contenu des sites Web est lancée avec succès!',
+        'listedestelephone' : listedestelephone
     }
     response = render(request, 'phones/index.html', context)
     return response
