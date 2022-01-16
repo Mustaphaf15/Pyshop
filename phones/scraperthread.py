@@ -1,4 +1,5 @@
 import threading
+import time
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -6,8 +7,9 @@ from phones.models import Sites
 from phones.webscraping import Scrappers
 
 
-def startrunner():
-    print('startrunner')
+def startnewrunner():
+    time.sleep(300)
+    gotoscrap()
 
 
 def gotoscrap():
@@ -33,3 +35,5 @@ def gotoscrap():
         runningthreads = [x.name for x in threading.enumerate()]
         if not site in runningthreads:
             threading.Thread(target=runsitescrap(), name=site)
+    # Lancer un nouveau wib scrapping
+    startnewrunner()
