@@ -69,4 +69,4 @@ class Scrappers:
                     phone.save()
 
         #mise ne pause du webscrapping pendant 5 minutes
-        time.sleep(300)
+        #time.sleep(300)

@@ -8,7 +8,6 @@ from phones.scraperthread import gotoscrap
 
 
 def index(request):
-    gotoscrap()
     listedestelephone = Phones.objects.all().order_by('-id').values()[:30]
     context = {
         'listedestelephone': listedestelephone,

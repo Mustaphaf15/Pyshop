@@ -21,7 +21,8 @@ class PhonesscrapAdmin(admin.ModelAdmin):
                     'create_at',
                     'update_at',)
     list_filter = ('site',
-                    'titre',
-                    'prix',
-                    'ville',
-                    'create_at',)
+                   'titre',
+                   'prix',
+                   'ville',
+                   'create_at',)
+    search_fields = ['titre', ]
