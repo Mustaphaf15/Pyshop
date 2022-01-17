@@ -31,7 +31,7 @@ def webscrap(request):
     listedestelephone = Phones.objects.values()[:30]
     context = {
         'alertescrap': 'Une nouvelle extraction du contenu des sites Web est lancée avec succès!',
-        'listedestelephone' : listedestelephone
+        'listedestelephone': listedestelephone
     }
     response = render(request, 'phones/index.html', context)
     gotoscrap()
