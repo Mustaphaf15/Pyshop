@@ -25,7 +25,7 @@ def index(request):
             context['messagealerte'] = "Vous avez oublié de remplir le champ de recherche !"
             context['typealerte'] = 'danger'
     else:
-        listedestelephone = Phones.objects.all().order_by('-id').values()[:30]
+        listedestelephone = Phones.objects.all().order_by('id').values()[:30]
 
     context['listedestelephone'] = listedestelephone
 
