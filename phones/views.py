@@ -12,7 +12,7 @@ def index(request):
     if request.method == 'POST':
         searched = request.POST['searched']
         print(type(searched))
-        if len(searched) and searched.strip() :
+        if len(searched) and searched.strip():
             listedestelephone = Phones.objects.filter(titre__contains=searched).values()
             context['messagealerte'] = f"La liste des articles trouver avec:  {searched}!"
             context['typealerte'] = 'info'
