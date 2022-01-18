@@ -4,9 +4,9 @@ Acceuil - pyshop
 {% endblock %}
 {% block content %}
 
-    {% if not alertescrap is None %}
-        <div class="alert alert-success" role="alert">
-            {{ alertescrap }}
+    {% if messagealerte %}
+        <div class="alert alert-{{ typealerte }}" role="alert">
+            {{ messagealerte }}
         </div>
     {% endif %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -19,7 +19,7 @@ Acceuil - pyshop
                 <p class="card-text">{{ myphone.prix }} DH</p>
                 <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <a href="{{ myphone.lien_pub }}">
+                  <a href="{{ myphone.lien_pub }}" target="_blank" rel="noopener noreferrer">
                       <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
                   </a>
                 </div>

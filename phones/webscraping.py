@@ -52,7 +52,7 @@ class Scrappers:
                     if 'https://' in item.select_one(self.selector_img)['data-original']:
                         phone.image = item.select_one(self.selector_img)['data-original']
                     else:
-                        phone.image = "/".join(self.lien.split("/")[0:3])
+                        phone.image = "/".join(self.lien.split("/")[0:3]) + '/'
                         phone.image += item.select_one(self.selector_img)['data-original']
 
                 else:
@@ -61,7 +61,7 @@ class Scrappers:
                     if 'https://' in item.select_one(self.selector_lien)['href']:
                         phone.lien_pub = item.select_one(self.selector_lien)['href']
                     else:
-                        phone.lien_pub = "/".join(self.lien.split("/")[0:3])
+                        phone.lien_pub = "/".join(self.lien.split("/")[0:3]) + '/'
                         phone.lien_pub += item.select_one(self.selector_lien)['href']
                 phone.date_pub = item.select_one(self.selector_date_pub).get_text(strip=True)
 

@@ -8,10 +8,26 @@ from phones.scraperthread import gotoscrap
 
 
 def index(request):
-    listedestelephone = Phones.objects.all().order_by('-id').values()[:30]
-    context = {
-        'listedestelephone': listedestelephone,
-    }
+    context = {}
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        print(type(searched))
+        if len(searched) and searched.strip() :
+            listedestelephone = Phones.objects.filter(titre__contains=searched).values()
+            context['messagealerte'] = f"La liste des articles trouver avec:  {searched}!"
+            context['typealerte'] = 'info'
+            if not listedestelephone.exists():
+                listedestelephone = Phones.objects.all().order_by('-id').values()[:30]
+                context['messagealerte'] = f"Nous n'avons pas trouvé d'article avec {searched}!"
+                context['typealerte'] = 'warning'
+        else:
+            listedestelephone = Phones.objects.all().order_by('-id').values()[:30]
+            context['messagealerte'] = "Vous avez oublié de remplir le champ de recherche !"
+            context['typealerte'] = 'danger'
+    else:
+        listedestelephone = Phones.objects.all().order_by('-id').values()[:30]
+
+    context['listedestelephone'] = listedestelephone
 
     return render(request, 'phones/index.html', context)
 
@@ -28,11 +44,12 @@ def export(request):
 
 
 def webscrap(request):
+    gotoscrap()
     listedestelephone = Phones.objects.values()[:30]
     context = {
-        'alertescrap': 'Une nouvelle extraction du contenu des sites Web est lancée avec succès!',
-        'listedestelephone': listedestelephone
+        'messagealerte': 'Une nouvelle extraction du contenu des sites Web est lancée avec succès!',
+        'typealerte': 'success',
+        'listedestelephone': listedestelephone,
     }
     response = render(request, 'phones/index.html', context)
-    gotoscrap()
     return response
