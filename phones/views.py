@@ -1,5 +1,4 @@
 import csv
-
 import pandas as pd
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -13,21 +12,21 @@ def index(request):
     if request.method == 'POST':
         searched = request.POST['searched']
         if len(searched) and searched.strip():
-            listedestelephone = Phones.objects.filter(titre__contains=searched).values()
-            df = pd.DataFrame(listedestelephone)
-            context ['analyse_ville'] = df.groupby('ville').agg({'prix': ['count', 'mean', 'min', 'max']})
-            context['messagealerte'] = f"La liste des articles trouver avec:  {searched}!"
+            listedestelephone = Phones.objects.filter(titre__contains=searched)
+            df = pd.DataFrame(listedestelephone.values("ville", "prix"))
+            context['analyse_ville'] = df.groupby('ville').agg({'prix': ['count', 'mean', 'min', 'max']})
+            context['messagealerte'] = f"La liste des articles trouvés avec:  {searched}!"
             context['typealerte'] = 'info'
             if not listedestelephone.exists():
-                listedestelephone = Phones.objects.all().order_by('-id').values()[:30]
+                listedestelephone = Phones.objects.all().order_by('-id')[:30]
                 context['messagealerte'] = f"Nous n'avons pas trouvé d'article avec {searched}!"
                 context['typealerte'] = 'warning'
         else:
-            listedestelephone = Phones.objects.all().order_by('-id').values()[:30]
+            listedestelephone = Phones.objects.all().order_by('-id')[:30]
             context['messagealerte'] = "Vous avez oublié de remplir le champ de recherche !"
             context['typealerte'] = 'danger'
     else:
-        listedestelephone = Phones.objects.all().order_by('id').values()[:30]
+        listedestelephone = Phones.objects.all().order_by('id')[:30]
 
     context['listedestelephone'] = listedestelephone
 
@@ -47,7 +46,7 @@ def export(request):
 
 def webscrap(request):
     gotoscrap()
-    listedestelephone = Phones.objects.values()[:30]
+    listedestelephone = Phones.objects.all()[:30]
     context = {
         'messagealerte': 'Une nouvelle extraction du contenu des sites Web est lancée avec succès!',
         'typealerte': 'success',
@@ -55,4 +54,3 @@ def webscrap(request):
     }
     response = render(request, 'phones/index.html', context)
     return response
-

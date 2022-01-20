@@ -1,3 +1,5 @@
+import threading
+
 from phones.models import Sites
 from phones.webscraping import Scrappers
 
@@ -16,6 +18,9 @@ def gotoscrap():
                                 selector_ville=site.selector_ville,
                                 selector_date_pub=site.selector_date_pub,
                                 selector_lien=site.selector_lien, )
-            scraper.runscrap()
+            runningthreads = [x.name for x in threading.enumerate()]
+            namerunning= f'{site}{i}'
+            if not namerunning in runningthreads:
+                t = threading.Thread(target=scraper.scrap(), name=namerunning)
+                t.start()
             i += 1
-

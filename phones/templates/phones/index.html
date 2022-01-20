@@ -3,59 +3,77 @@
 Acceuil - pyshop
 {% endblock %}
 {% block content %}
-
-    {% if messagealerte %}
-        <div class="alert alert-{{ typealerte }}" role="alert">
-            {{ messagealerte }}
-        </div>
-    {% endif %}
-
-    {% if analyse_ville.items %}
-        <div class="row">
-            <div class="col">
-                <table class="table table-sm table-striped table-hover align-middle">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Ville</th>
-                            <th scope="col">Nb d'annonce</th>
-                            <th scope="col">Prix moyen</th>
-                            <th scope="col">Prix min</th>
-                            <th scope="col">prix max</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for index, row in analyse_ville.iterrows %}
-                        <tr scope="row">
-                                <td>{{ index }}</td>
-                            {% for cell in row %}
-                                <td>{{ cell |floatformat:2 }}</td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    {% endif %}
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-    {% for myphone in listedestelephone %}
-        <div class="col">
-          <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-            <div class="card-body">
-                <p class="card-text">{{ myphone.titre }}</p>
-                <p class="card-text">{{ myphone.prix }} DH</p>
-                <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a href="{{ myphone.lien_pub }}" target="_blank" rel="noopener noreferrer">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  </a>
+ <!--
+    <div class="row">
+        <div class="col-2">
+            <form action="post" name="multisearch">
+                <div class="form-group">
+                    <input class="form-control form-control-sm" type="text" placeholder="Nom/Marque du téléphone">
                 </div>
-                <small class="text-muted">{{ myphone.date_pub }}</small>
-              </div>
-            </div>
-          </div>
+                <input class="form-control form-control-sm" type="text" placeholder="ville">
+                <input class="form-control form-control-sm" type="text" placeholder="prix min">
+                <input class="form-control form-control-sm" type="text" placeholder="prix max">
+                <button type="submit" class="btn btn-primary">Sign in</button>
+            </form>
         </div>
-    {% endfor %}
+        <div class="col-10">
+-->
+            {% if messagealerte %}
+                <div class="alert alert-{{ typealerte }}" role="alert">
+                    {{ messagealerte }}
+                </div>
+            {% endif %}
+
+            {% if analyse_ville.items %}
+                <div class="row">
+                    <div class="col">
+                        <table class="table table-sm table-striped table-hover align-middle">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Ville</th>
+                                    <th scope="col">Nb d'annonce</th>
+                                    <th scope="col">Prix moyen</th>
+                                    <th scope="col">Prix min</th>
+                                    <th scope="col">prix max</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for index, row in analyse_ville.iterrows %}
+                                <tr scope="row">
+                                        <td>{{ index }}</td>
+                                    {% for cell in row %}
+                                        <td>{{ cell |floatformat:2 }}</td>
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for myphone in listedestelephone %}
+                <div class="col">
+                  <div class="card shadow-sm">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                    <div class="card-body">
+                        <p class="card-text">{{ myphone.titre }}</p>
+                        <p class="card-text">{{ myphone.prix }} DH</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                          <a href="{{ myphone.lien_pub }}" target="_blank" rel="noopener noreferrer">
+                              <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                          </a>
+                        </div>
+                        <small class="text-muted">{{ myphone.date_pub }}</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            {% endfor %}
+            </div>
+<!--
+        </div>
     </div>
+-->
 {% endblock %}

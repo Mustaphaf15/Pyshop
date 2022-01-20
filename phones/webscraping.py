@@ -29,13 +29,6 @@ class Scrappers:
         self.selector_date_pub = selector_date_pub
         self.selector_lien = selector_lien
 
-    def runscrap(self):
-        runningthreads = [x.name for x in threading.enumerate()]
-        if not self.nomsite in runningthreads:
-            t = threading.Thread(target=self.scrap(), name=self.nomsite)
-            t.start()
-
-
     def scrap(self):
         page = requests.get(self.lien)
         soup = BeautifulSoup(page.content, 'lxml')
