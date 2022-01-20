@@ -9,6 +9,32 @@ Acceuil - pyshop
             {{ messagealerte }}
         </div>
     {% endif %}
+
+    {% if not analyse_ville.empty %}
+        <div class="row">
+            <table class="table table-hove">
+                <thead>
+                    <tr>
+                        <th scope="col">Ville</th>
+                        <th scope="col">Nb d'annonce</th>
+                        <th scope="col">Prix moyen</th>
+                        <th scope="col">Prix min</th>
+                        <th scope="col">prix max</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index, row in analyse_ville.iterrows %}
+                    <tr scope="row">
+                            <td>{{ index }}</td>
+                        {% for cell in row %}
+                            <td>{{ cell |floatformat:2 }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     {% for myphone in listedestelephone %}
         <div class="col">
